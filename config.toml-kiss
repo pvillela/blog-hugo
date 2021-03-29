@@ -1,7 +1,7 @@
 baseurl = "https://pvillela.github.io/blog"
 languageCode = "en-us"
 title = "Paulo Villela"
-theme = "hugo-theme-casper"
+theme = "kiss"
 paginate = 2
 Copyright = "© Paulo Villela 2021 - All rights reserved"
 canonifyurls = true

@@ -1,0 +1,20 @@
+baseurl: https://pvillela.github.io/blog
+title: Paulo Villela
+theme: ghostwriter
+canonifyurls: true
+
+params:
+  mainSections:
+    - post
+  intro: true
+  headline: Paulo Villela
+  description: Thoughts on Software Architecture and Engineering
+  github: "https://github.com/pvillela"
+  linkedin: https://linkedin.com/in/pvillela/
+#  email: xxx@example.com
+  opengraph: true
+  shareTwitter: false
+  dateFormat: "Mon, Jan 2, 2006"
+
+permalinks:
+  post: "/:year/:filename/"
