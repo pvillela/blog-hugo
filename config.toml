@@ -1,0 +1,20 @@
+baseurl = "https://pvillela.github.io/blog"
+title = "Paulo Villela"
+theme = "ghostwriter"
+canonifyurls = true
+
+
+[Params]
+    mainSections = ["post"]
+    intro = true
+    headline = "Paulo Villela"
+    description = "Thoughts on Software Architecture and Engineering"
+    github = "https://github.com/pvillela"
+#    twitter = "https://twitter.com/XXX"
+#    email = "XXX@example.com"
+    opengraph = true
+    shareTwitter = false
+    dateFormat = "Mon, Jan 2, 2006"
+
+[Permalinks]
+    post = "/:filename/"

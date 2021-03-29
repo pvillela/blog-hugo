@@ -1,0 +1,48 @@
+baseurl = "https://pvillela.github.io/blog"
+languageCode = "en-us"
+title = "Paulo Villela"
+theme = "ghostwriter"
+paginate = 2
+Copyright = "© Paulo Villela 2021 - All rights reserved"
+canonifyurls = true
+
+[params]
+description = "Enter your personal description"
+authorlocation = "authorlocation"
+#bad with ghostwriter#cover = "images/cover.png"
+## save the image you want to use as background picture in directory "./static/images"author = "author name"(delete this line when editing)
+#bad with ghostwriter#logo = "images/logo.png"
+## save the image you want to use as website logo in directory "./static/images"(delete this line when editing)githubName = "your github name"
+linkedinName = "your linkedin name"
+email = "your email"
+instagramName = "your ins name"
+hideHUGOSupport = false
+
+[[menu.main]]  # here are the buttons on the menu
+name = "Home" # Button will display as "Home"
+weight = 100 # the weight decides the position of the button (higher or lower)
+identifier = "home"
+pre = "<br />"
+url = "/"
+
+[[menu.main]]
+name = "Contact"
+weight = 0
+identifier = "contact" # this button will refer to a markdown file named "contact" in the content folder
+pre = "<br />"
+url = "/contact"
+
+[[menu.main]]
+name = "Blog"
+identifier = "blog" # this page will refer to a markdown file named "blog" in the content folder
+pre = "<br />"
+url = "/post"
+weight = 40
+
+[permalinks]
+post = "/:slug/"
+
+[sitemap]
+ChangeFreq = ""
+Filename = "sitemap.xml"
+Priority = "-1"
