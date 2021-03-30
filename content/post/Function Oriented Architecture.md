@@ -37,7 +37,7 @@ This report is about the layering and modularization of services, whether micros
 
 Generally speaking, a service executable runs in a context such as: 
 
-![BROKEN_LINK](/images/foa/Service_Context.png)
+![BROKEN_LINK](/blog-imgs/foa/Service_Context.png#center)
 
 This is just an illustrative possibility.  For purposes of this discussion, it doesn't matter how the service is called -- only that the service is called somehow and that it calls other "*things*" in its environment such as other services, databases, event hubs, etc.
 
@@ -121,7 +121,7 @@ When architecting services (micro or otherwise), a three-layer approach is often
 2.  Business logic layer
 3.  Data access layer
 
-![BROKEN_LINK](/images/foa/Layered_Architecture.png)
+![BROKEN_LINK](/blog-imgs/foa/Layered_Architecture.png#center)
 
 With this layering, the flow of control is:
 1. Client calls controller
@@ -142,8 +142,9 @@ As will be shown later, the function-oriented architecture not only avoids undes
 The *Clean Architecture*, articulated by Robert C. Martin in his [blog](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) and further elaborated in his [book](https://www.oreilly.com/library/view/clean-architecture-a/9780134494272/), is a well-known and effective way to structure software, promoting the key goals of modularity with high module cohesiveness and low module coupling.
 
 ![The Clean Architecture](https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg)
-*<div style="text-align: center; font-size: 80%;">
-From Robert C. Martin's <a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">The Clean Architecture Blog</a></div>*
+
+<div style="text-align: center; font-size: 80%; font-style: italic;">
+From Robert C. Martin's <a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">The Clean Architecture Blog</a></div>
 
 The function-oriented architectural style proposed here is consistent with the Clean Architecture principles.  By refining and adding some prescription to portions of the Clean Architecture, the Function-Oriented Architecture provides a simple way to structure software in adherence with the Clean Architecture.
 
@@ -187,7 +188,7 @@ Although these ideas targeted object-oriented software design, the general conce
 
 This section describes a simplified traditional object-oriented web service stereotype model.  While a full object-oriented module stereotype model might include additional and more nuanced stereotypes, the purpose of this section is just to illustrate the module stereotype concept, in a familiar object-oriented setting, as an introduction to the next section on the function-oriented stereotype model.
 
-![BROKEN_LINK](/images/foa/OO_Stereotypes.png)
+![BROKEN_LINK](/blog-imgs/foa/OO_Stereotypes.png#center)
 
 This kind of meta-model can be used to say that, no matter how many controllers, business services, data access objects, information objects, data transfer objects, and domain objects a service/application may have, if it complies with the meta-model then:
 * The allowed kinds of module (the stereotypes) are depicted as boxes in the diagram.
@@ -204,7 +205,7 @@ This kind of meta-model can be used to say that, no matter how many controllers,
 
 The function-oriented module stereotype model, depicted below, can be seen to have some similarities to the above simple object-oriented example, but there are also significant differences.
 
-![BROKEN_LINK](/images/foa/Core_Stereotypes-black.png)
+![BROKEN_LINK](/blog-imgs/foa/Core_Stereotypes-black.png#center)
 
 The function-oriented architecture module meta-model defines the following stereotypes, responsibilities, and constraints:
 * The allowed core kinds of module (core stereotypes) are depicted as boxes with solid black borders in the above diagram.  (Additional supporting stereotypes are discussed later in this report.)
@@ -248,7 +249,7 @@ In a service-based application, the realisation of a use case involves interacti
 
 On the other hand, an endpoint may support the realisation of multiple different use cases.  In the diagram below, the preceding statements are represented by the many-to-many association between the *Use Case* and *Endpoint* entities.
 
-![BROKEN_LINK](/images/foa/Use_Cases_and_Services.png)
+![BROKEN_LINK](/blog-imgs/foa/Use_Cases_and_Services.png#center)
 
 The rest of the diagram represents how a *Service* is decomposed physically and logically.
 
@@ -290,7 +291,7 @@ Function-Oriented Architecture (FOA) implies a finer-grained module structure th
 
 The following diagram exemplifies a typical object-oriented decomposition of a service -- a controller calls a business service (a.k.a. [use case interactor](http://www.plainionist.net/Implementing-Clean-Architecture-UseCases/)) which in turn calls a DAO (or repository).  The business logic is embedded in the XyzBusSvc main method.
 
-![BROKEN_LINK](/images/foa/Call_Stack_OO_Coupled.png)
+![BROKEN_LINK](/blog-imgs/foa/Call_Stack_OO_Coupled.png#center)
 
 XyzBusSvc can reference the interface of AbcDao instead of its concrete implementation and thus avoid the problem of having the business logic depend on platform-specific logic.
 
@@ -303,7 +304,7 @@ While this decomposition achieves some separation of concerns and some reduction
 
 The previous decomposition can be modified so that the business logic is factored-out into separate methods. This way, the main method of XyzBusSvc is only responsible for orchestrating calls to methods on XyzBusSvc itself and on AbcDao.
 
-![BROKEN_LINK](/images/foa/Call_Stack_OO_Less_Coupled.png)
+![BROKEN_LINK](/blog-imgs/foa/Call_Stack_OO_Less_Coupled.png#center)
 
 This decomposition has the following advantages over the previous one:
 * Improved separation of concerns as now the doIt method is only concerned with orchestration.
@@ -320,7 +321,7 @@ A function-oriented decomposition takes the above object-oriented decomposition 
 * Each individual stereotype function lives in its own file/module/class/interface/type (depending on the programming language).
 * The main service function (the service flow) depends only on general functional interfaces and knows nothing about specific classes/interfaces that implement the various other functions.  This is key to avoid coupling.
 
-![BROKEN_LINK](/images/foa/Call_Stack_Functional.png)
+![BROKEN_LINK](/blog-imgs/foa/Call_Stack_Functional.png#center)
 
 The implications of (a) dependence on general functional interfaces versus specific named interfaces and (b) separate functions with more files versus grouped functions with fewer files are:
 * By only using general functional interfaces, the function-oriented decomposition avoids the kind of semantic dependence found in an object-oriented decomposition, where a business service (business case interactor) semantically depends on the data access object.
