@@ -4,7 +4,7 @@ draft: false
 date: 2021-04-04
 ---
 
-This article describes an architecture for the signing of JWT tokens and how the solution fares when portions of it are compromised.
+This article describes an architecture for the signing of JWT tokens and how the solution fares when certain parts are compromised.
 
 
 
