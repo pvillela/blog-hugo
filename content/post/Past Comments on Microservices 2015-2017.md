@@ -1,8 +1,8 @@
 ---
-title: "Historical Comments on Microservices: 2015-2017"
+title: "Past Comments on Microservices: 2015-2017"
 date: 2021-03-28
 ---
-# Historical Comments on Microservices: 2015-2017
+# Past Comments on Microservices: 2015-2017
 
 These are comments on microservices I made between 2015 and 2017.  Some of the content still holds, some of it I no longer agree with.
 
