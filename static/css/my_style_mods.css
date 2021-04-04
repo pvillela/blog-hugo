@@ -35,12 +35,12 @@ h6 { font-size: 14px; margin-top: 15px; }
 
 p {
     line-height: 1.4;
-    margin: 12px 0 0;
+    margin: 16px 0 0;
 }
 
 ul, ol {
     line-height: 1.4;
-    margin: 4px 0 0;
+    margin: 6px 0 0;
 }
 
 ul ul, ul ol, ol ul, ol ol { margin: 0 0 0 0; }

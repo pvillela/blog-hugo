@@ -79,3 +79,4 @@ We will consider the following scenarios and the respective responses and conseq
   - Reestablish the key generation service in an uncompromised environment.
   - Restart all signing and signature verification services.
 - if the compromise is not known -- This is hopefully a less-likely scenario in organisations with strong security monitoring.  There is no response in this case.  The attacker will be able to access accounts with known usernames until the breach becomes known.
+
