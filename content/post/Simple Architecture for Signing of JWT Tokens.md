@@ -1,10 +1,10 @@
 ---
-title: Simple and Resilient Architecture for Secure Signing of JWT Tokens
+title: Simple and Resilient Architecture for Signing of JWT Tokens
 draft: false
 date: 2021-04-04
 ---
 
-This article describes an architecture for the signing of JWT tokens and how the solution fares when certain parts are compromised.
+This article describes a simple and resilient architecture for the signing of JWT tokens, as well as discusses how the solution fares when certain components are compromised.
 
 ## Elements
 
