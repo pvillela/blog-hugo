@@ -51,6 +51,8 @@ ul li, ol li {
 
 pre {
     background-color: rgba(243, 233, 233, 0.452);
+    margin-top: 12px;
+    margin-bottom: 12px;
 }
 
 code {
