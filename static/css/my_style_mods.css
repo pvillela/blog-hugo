@@ -48,3 +48,12 @@ ul ul, ul ol, ol ul, ol ol { margin: 0 0 0 0; }
 ul li, ol li {
     margin: 4px 0 0;
 }
+
+pre {
+    background-color: rgba(243, 233, 233, 0.452);
+}
+
+code {
+    /* background-color: #272822; */
+    background-color: rgba(243, 233, 233, 0.452);
+}

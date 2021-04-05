@@ -6,6 +6,11 @@ copyright: Paulo Villela - All rights reserved
 googleAnalytics: XXX
 canonifyurls: true
 
+pygmentsOptions: linenos=5
+pygmentsCodefences: true
+pygmentsStyle: pygments
+
+
 params:
   mainSections:
     - post
