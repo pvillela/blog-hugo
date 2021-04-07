@@ -1,8 +1,7 @@
 ---
 title: Test of center-text shortcode
 draft: true
-date: 2021-03-14
-lastmod: 2021-04-04
+date: 2021-04-07
 ---
 
 # Test of center-text shortcode
