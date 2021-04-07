@@ -1,6 +1,7 @@
 ---
 title: Containers, Kubernetes, and Service Mesh in a Nutshell
 date: 2021-02-20
+lastmod: 2021-02-20
 ---
 # Containers, Kubernetes, and Service Mesh in a Nutshell
 

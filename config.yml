@@ -5,11 +5,15 @@ languageCode: en-us
 copyright: Paulo Villela - All rights reserved
 googleAnalytics: XXX
 canonifyurls: true
+enableGitInfo: false
 
 pygmentsOptions: linenos=5
 pygmentsCodefences: true
 pygmentsStyle: pygments
 
+author:
+  name: Paulo Villela
+  profile: /page/about
 
 params:
   mainSections:

@@ -1,7 +1,7 @@
 ---
 title: Persistence Wrapper in Golang
-draft: false
 date: 2021-04-04
+lastmod: 2021-04-04
 ---
 
 # Persistence Wrapper in Golang
@@ -13,7 +13,7 @@ When working with databases, there is typically a need to deal with record conte
 There are several general ways to address the need to handle such additional record context information required for persistence purposes.
 
 1. Define a `RecCtx` data type that encapsulates the additional persistence context information.  Data access functions (***DAFs***) use this data type as a parameter and/or return types, together with normal domain entity data types.
-2. Define a concrete data structure Pw[T] (using Go generics notation) that encapsulates both the persistence record context information and the domain entity type T.  DAFs use this type as parameter and/or return types, instead of the normal domain entity data types.
+2. Define a concrete data structure Pw[T] (using Go generics notation) that encapsulates both the persistence record context information and the domain entity type T (or its corresponding pointer type).  DAFs use this type as parameter and/or return types, instead of the normal domain entity data types.
 3. Define a wrapper interface type Pw[T] that encapsulates both the persistence record context information and the domain entity type T.  This is similar to 3 above but uses an interface instead of a struct.
 4. For each domain entity type Xyz, define an interface IXyz that is implemented by the domain entity type and define an augmented concrete type that also implements the interface IXyz and contains both the domain entity attributes and the persistence record context information.  DAFs use this type as parameter and/or return types, instead of the normal domain entity data types.
 5. (This approach is not applicable to Go but is used in JVM languages.) Use bytecode weaving techniques to add persistence capabilities to existing domain model classes.  DAFs use the normal entity data types (augmented behind the scenes by bytecode weaving) as parameter and/or return types.

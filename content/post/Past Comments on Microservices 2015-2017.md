@@ -1,6 +1,7 @@
 ---
 title: "Past Comments on Microservices: 2015-2017"
 date: 2021-03-28
+lastmod: 2021-03-28
 ---
 # Past Comments on Microservices: 2015-2017
 
