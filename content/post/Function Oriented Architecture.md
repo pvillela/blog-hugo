@@ -1,7 +1,7 @@
 ---
 title: Function-Oriented Architecture (this is a work in progress)
 date: 2021-03-14
-lastmod: 2021-04-05
+lastmod: 2021-04-04
 ---
 Function-Oriented Architecture
 ==============================
