@@ -148,8 +148,6 @@ The *Clean Architecture*, articulated by Robert C. Martin in his [blog](https://
 From Robert C. Martin's <a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">The Clean Architecture Blog</a>
 </div>
 
-*(From Robert C. Martin's [The Clean Architecture Blog](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html))*
-
 The function-oriented architectural style proposed here is consistent with the Clean Architecture principles.  By refining and adding some prescription to portions of the Clean Architecture, the Function-Oriented Architecture provides a simple way to structure software in adherence with the Clean Architecture.
 
 See [Mapping to Clean Architecture](#mapping-to-clean-architecture) for details.

@@ -15,6 +15,11 @@ author:
   name: Paulo Villela
   profile: /page/about
 
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
 params:
   mainSections:
     - post
