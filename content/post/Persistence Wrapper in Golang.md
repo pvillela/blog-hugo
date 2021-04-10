@@ -1,12 +1,14 @@
 ---
 title: Persistence Wrapper in Golang
 date: 2021-04-04
-lastmod: 2021-04-09
+lastmod: 2021-04-10
 ---
 
 # Persistence Wrapper in Golang
 
 When working with databases, there is typically a need to deal with record context information, required for persistence, in addition to the domain model entities' natural attributes.  For example, some databases require a synthetic key field and some database operations may require an optimistic concurrency token field.  This article discusses different approaches to address this need, focusing on Go but also including, for comparison, brief references to approaches used with JVM languages.
+
+*Note on Go generics: The Go language does not yet have generics but support for generics is an approved language change and is expected to be released in late 2021.  The discussion below uses Go generics in anticipation of this forthcoming language enhancement.  In the meantime, given any domain entity type Foo, instead of RecCtx[Foo] and Pw[Foo], one can define non-generic types RecCtxFoo and PwFoo.*
 
 ## Approaches
 
