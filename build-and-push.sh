@@ -28,3 +28,5 @@ cd ..
 git add .
 git commit -m "$COMMIT_MSG"
 git push https://pvillela:${PASSCODE}@github.com/pvillela/blog-hugo.git main
+git status
+
