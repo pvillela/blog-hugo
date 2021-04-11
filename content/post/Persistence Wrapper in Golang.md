@@ -1,7 +1,7 @@
 ---
 title: Persistence Wrapper in Golang
 date: 2021-04-04
-lastmod: 2021-04-10
+lastmod: 2021-04-11
 ---
 
 # Persistence Wrapper in Golang
@@ -38,7 +38,9 @@ The use of approach 1 in Go looks like this:
 // RecCtx is a type that holds platform-specific database record context information,
 // e.g., an optimistic locking token and/or a record ID.  DAFs may accept this type as
 // a parameter or return this type, together with domain entity types.
-type RecCtx[T any] interface{}
+type RecCtx[T any] struct {
+    Rc interface{}
+}
 
 // Example A1 -- DAF signature
 func ArticleUpdateDaf(article Article, rc RecCtx) (Article, RecCTx, error)
