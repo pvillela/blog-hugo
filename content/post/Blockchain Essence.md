@@ -6,7 +6,7 @@ lastmod:
 
 # The Essence of Blockchain Technology for IT Practitioners
 
-This brief article aims to describe the essence of Blockchain technology in terms of concepts that many IT professionals are familiar with.
+This brief article describes the essence of Blockchain technology in terms that many IT professionals are familiar with.
 
 A blockchain is essentially a replicated database that consists of the following capabilities.  These capabilities are largely common to both public and permissioned (private) blockchains:
 
