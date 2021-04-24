@@ -20,7 +20,8 @@ cd public
 git add .
 read -p "Enter commit message: " COMMIT_MSG
 git commit -m "$COMMIT_MSG"
-read -p "Enter GitHub passcode: " PASSCODE
+echo "Enter GitHub passcode: "
+read -s PASSCODE
 echo "https://pvillela:${PASSCODE}@github.com/pvillela/blog.git"
 git push https://pvillela:${PASSCODE}@github.com/pvillela/blog.git gh-pages
 
