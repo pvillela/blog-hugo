@@ -27,8 +27,8 @@ A blockchain is essentially a replicated database that consists of the following
     - Creation of ledger replicas
     - Participation in the replica consensus process
 7. **Rules that govern approval to obtain access**
-   - The approval process to grant data access rights to users
-   - The approval provess to grant approval rights to users
+   - An approval process to grant the aforementioned data access rights to users
+   - An approval process to grant approval rights to users (i.e., so that a user can participate in the approval process for other users)
 8. **APIs to provide controlled access to the above capabilities**
 
 <br>
