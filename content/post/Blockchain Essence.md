@@ -1,14 +1,16 @@
 ---
 title: The Essence of Blockchain Technology for IT Practitioners
 date: 2021-04-24
-lastmod: 
+lastmod: 2021-04-27
 ---
 
 # The Essence of Blockchain Technology for IT Practitioners
 
 This brief article describes the essence of Blockchain technology in terms that many IT professionals are familiar with.  The references at the end elaborate on the core concepts touched-upon here.
 
-A blockchain or distributed ledger is essentially a replicated database that consists of the following capabilities.  These capabilities are largely common to both public and permissioned (private) blockchains:
+### Capabilities
+
+A **blockchain or distributed ledger** is essentially a replicated database with the following capabilities.  These capabilities are largely common to both public (permissionless) and private (permissioned) blockchains:
 
 <br>
 
@@ -31,13 +33,15 @@ A blockchain or distributed ledger is essentially a replicated database that con
    - Approval processes to grant approval rights to participants and users (i.e., so that a participant or user can participate in the approval process for other participants or users).
 8. **APIs to provide controlled access to the above capabilities**
 
-<br>
 
-Capabilities 1, 2, and 3 above are the most fundamental and are truly the essence of blockchain technology.  The consensus process and transaction validation rules vary greatly across blockchain products.
+
+### Comments
+
+Capabilities 1, 2, and 3 above are the most fundamental and are truly the essence of blockchain technology.  The consensus process and transaction validation rules vary greatly across blockchain products.  Some blockchain products (e.g., [Hyperledger Indy](https://www.hyperledger.org/use/hyperledger-indy)) have multiple ledgers, each supporting different transaction types.
 
 Capability 4 is present to some extent in all blockchain products, but can vary greatly.  For example, this capability is fairly limited in the case of the Bitcoin blockchain.
 
-Capabilities 5 and 6 are the key differentiators between permissioned (private) and public blockchains.  They can vary greatly across blockchain products.  In the case of public blockchains, anyone can join and access the data, no approval is required.
+Capabilities 5 and 6 are the key differentiators between private and public blockchains.  They can vary greatly across blockchain products.  In the case of public blockchains, anyone can join and access the data, no approval is required.  Some blockchain products (e.g., [Hyperledger Indy](https://www.hyperledger.org/use/hyperledger-indy)) have some aspects that are public and others that are permissioned.
 
 Capability 7 is present in all blockchains but varies greatly by product.
 
