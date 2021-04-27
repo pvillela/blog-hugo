@@ -8,9 +8,9 @@ lastmod: 2021-04-27
 
 This brief article describes the essence of Blockchain technology in terms that many IT professionals are familiar with.  The references at the end elaborate on the core concepts touched-upon here.
 
-### Capabilities
+## Capabilities
 
-A **blockchain or distributed ledger** is essentially a replicated database with the following capabilities.  These capabilities are largely common to both public (permissionless) and private (permissioned) blockchains:
+A **blockchain** or **distributed ledger** is essentially a replicated database with the following capabilities.  These capabilities are largely common to both public (permissionless) and private (permissioned) blockchains:
 
 <br>
 
@@ -19,7 +19,7 @@ A **blockchain or distributed ledger** is essentially a replicated database with
     - *Tamper-proof* means that, once a transaction is accepted and there is consensus that it is valid see below), it cannot be deleted, or modified.
     - This doesn't preclude, however, another valid transaction  from reversing or adjusting the original transaction -- but the original transaction will always be preserved in the log.
 2. **The ledger is replicated, with eventual consistency through consensus**
-    - There is a replication process and a consensus process to ensure eventual consistency of all ledger replicas and automatically resolve replication conflicts.
+    - There is a replication process and a [consensus](https://en.wikipedia.org/wiki/Consensus_(computer_science)) process to ensure [eventual consistency](https://en.wikipedia.org/wiki/Eventual_consistency) of all ledger replicas and automatically resolve replication conflicts.
     - Different *participants* can have their own (one or more) replicas.  ***Participants*** are entities that can participate in the replication and consensus processes.
 4. **Transaction validation rules** that govern what entries can be added to the ledger
 5. **Views that support efficient queries** (e.g., using indices rather than forcing traversal of the log)
@@ -35,11 +35,13 @@ A **blockchain or distributed ledger** is essentially a replicated database with
 
 
 
-### Comments
+## Comments
+
+The term *[blockchain](https://en.wikipedia.org/wiki/Blockchain)* comes from the technique used to implement [Bitcoin](https://en.wikipedia.org/wiki/Bitcoin)'s ledger.  A similar technique or some variant of it is used in the implementation of the ledgers for most blockchain products.
 
 Capabilities 1, 2, and 3 above are the most fundamental and are truly the essence of blockchain technology.  The consensus process and transaction validation rules vary greatly across blockchain products.  Some blockchain products (e.g., [Hyperledger Indy](https://www.hyperledger.org/use/hyperledger-indy)) have multiple ledgers, each supporting different transaction types.
 
-Capability 4 is present to some extent in all blockchain products, but can vary greatly.  For example, this capability is fairly limited in the case of the Bitcoin blockchain.
+Capability 4 is present to some extent in all blockchain products, but can vary greatly.  For example, this capability is fairly limited in the case of the [Bitcoin](https://en.wikipedia.org/wiki/Bitcoin) blockchain.
 
 Capabilities 5 and 6 are the key differentiators between private and public blockchains.  They can vary greatly across blockchain products.  In the case of public blockchains, anyone can join and access the data, no approval is required.  Some blockchain products (e.g., [Hyperledger Indy](https://www.hyperledger.org/use/hyperledger-indy)) have some aspects that are public and others that are permissioned.
 
@@ -47,7 +49,7 @@ Capability 7 is present in all blockchains but varies greatly by product.
 
 
 
-### References
+## References
 
 [Blockchain basics: Glossary and use cases](https://developer.ibm.com/technologies/blockchain/tutorials/cl-blockchain-basics-glossary-bluemix-trs/)
 
