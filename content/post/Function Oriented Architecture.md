@@ -1,7 +1,7 @@
 ---
 title: Function-Oriented Architecture (this is a work in progress)
 date: 2021-03-14
-lastmod: 2021-04-04
+lastmod: 2022-04-10
 ---
 Function-Oriented Architecture
 ==============================
@@ -223,7 +223,7 @@ The function-oriented architecture module meta-model defines the following stere
     * ***Event***, which defines a data structure for an event to be published or consumed.  By convention, the names of modules implementing this variety have the suffix "***Evt***".
 
   We are not designating the different varieties of *Business Data* as subkinds because often there can be dependencies among them, with any of these varieties potentially containing any of the others.
-* ***Business Function*** is a subkind of *Function*.  An instance of this stereotype is responsible for performing pure business logic; it should not do anything else.  In particular, a *Business Function* should involve no I/O or side-effects.  A *Business Function* module may only depend on *Business Domain Data* and *Supporting Function* modules.  By convention, the names of modules implementing this stereotype have the suffix "***Bf***".
+* ***Business Function*** is a subkind of *Function*.  An instance of this stereotype is responsible for performing pure business logic; it should not do anything else.  In particular, a *Business Function* should involve no I/O or side-effects.  A *Business Function* module may only depend on *Business Domain Data*, *Supporting Function*, and other *Business Function* modules.  By convention, the names of modules implementing this stereotype have the suffix "***Bf***".
 * ***Data Access Function*** is a subkind of *Function*.  An instance of this stereotype is responsible for performing database I/O; it should not do anything else.  In particular, it should not contain any business logic.  A *Data Access Function* module may only depend on *Business Domain Data*, *Platform-Specific Data*, and *Platform-Specific Framework* modules.  By convention, the names of modules implementing this stereotype have the suffix "***Daf***".
 * ***Service Client*** is a subkind of *Function*.  An instance of this stereotype is responsible for calling a service endpoint (internal or external); it should not do anything else.  In particular, it should not contain any business logic.  A *Service Client* module may only depend on *Business Domain Data*, *Platform-Specific Data*, and *Platform-Specific Framework* modules.  By convention, the names of modules implementing this stereotype have the suffix "***Sc***".
 * ***Event Publisher*** is a subkind of *Function*.  An instance of this stereotype is responsible for publishing an event; it should not do anything else.  In particular, it should not contain any business logic.  An *Event Publisher* module may only depend on *Business Domain Data*, *Platform-Specific Data*, and *Platform-Specific Framework* modules.  By convention, the names of modules implementing this stereotype have the suffix "***Ep***". 
@@ -232,9 +232,9 @@ The function-oriented architecture module meta-model defines the following stere
 
 A key guiding principle in this model is that each of the subkinds of the *Function* stereotype does only one kind of thing.  
 
-Another key principle is that only *Flow* (including *Service Flow*) modules are allowed to call other subkinds of the *Function* stereotype.  However, those calls are always through a general function interface, so there is no dependence between the flow and the modules that implement the called functions.
+Another key principle is that only *Flow* (including *Service Flow*) modules are allowed to call other subkinds of the *Function* stereotype.  With one exception, those calls are always through a general function interface, so there is no dependence between the flow and the modules that implement the called functions.  The exception is that a *Flow* instance is allowed to call a *Business Function* instance directly, if the BF does not require any configuration properties, instead of using a general function interface.  This exception is allowed for the sake of simplicity.  While this creates a direct dependency, that is typically not a problem as will be discussed later in this report.
 
-In particular, *Business Function*s, *Data Access Function*s, *Service Client*s, and *Event Publisher*s are not allowed to call each other.
+In particular, instances of *Business Function*, *Data Access Function*, *Service Client*, and *Event Publisher* are not allowed to call instances of the same or other stereotypes, with one exception.  Instances of *Business Function* are allowed to call other instances of *Business Function* directly (if the other BFs do not require any configuration properties) or through a general function interface.
 
 Adherence to these principles enables module decoupling, an important feature of this function-oriented architecture. 
 
@@ -335,7 +335,7 @@ The implications of (a) dependence on general functional interfaces versus speci
   * As noted earlier, work assignment and source control are easier, and merge conflicts are avoided when each functional component lives in a separate file.
   * A Kanban board for an FOA decomposition is simple, clear, and explicit.  When using an object-oriented decomposition, one could track individual methods on the Kanban board but there are dependencies, as discussed above, among methods in the same class.
 
-Overall, as demonstrated by large projects using the function-oriented architecture, the advantages of having each function in a separate file usually outweigh the disadvantages, especially for complex services.
+Overall, as demonstrated by large projects using the function-oriented architecture, the advantages of having each function stereotype instance in a separate file usually outweigh the disadvantages, especially for complex services.
 
 
 
@@ -361,7 +361,7 @@ To mitigate that inconvenience without entirely giving-up the decoupling advanta
     Simply name each variable representing a stereotype dependency with the name of the stereotype instance, possibly changing the case of the first character to conform with language requirements or conventions.
 
     For example, in Kotlin, a dependency on a stereotype instance `FooBf` that produces a function of type `(Int) -> String` would appear as `val fooBf: (Int) -> String`. 
-    
+
     This allows one to find the module implementing the dependency using the IDE's search capability.  
 
     This approach works well enough and has been successfully used on large projects.  The key drawback of this approach is that when the dependency's type name is changed via refactoring then the variable name needs to be adjusted manually. If the variable name is not adjusted, the code still works but the ability to navigate from the variable to the stereotype implementation is gone.
@@ -369,11 +369,11 @@ To mitigate that inconvenience without entirely giving-up the decoupling advanta
 2. **Dependence on functional interfaces with concrete methods**
 
     In JVM languages like Kotlin and Scala, where interfaces may have concrete methods, a stereotype instance may be implemented as an interface with a concrete method that implements the desired functional interface (e.g., `invoke` in Kotlin or `apply` in Scala).  To facilitate navigation, a flow that depends on another stereotype instance may have a variable with the type of the interface that defines the instance.  
-   
+
     For example, in Kotlin, a dependency on a stereotype instance `FooBf` that produces a function of type `(Int) -> String` would appear as `val fooBf: FooBf` instead of `val fooBf: (Int) -> String`.  
-   
+
     In this case, the name of the variable is immaterial as the navigation is directly provided by the name of the interface that defines the stereotype instance of the dependency.  With this approach, navigation is straightforward and resilient to name refactoring, but the flow that holds the variable is directly dependent on the implementation of the other stereotype.  
-   
+
     This may still be OK, provided that: (a) the flow only needs to ever access a single implementation of the dependency (e.g., there is no need to support variants of the same DAF with implementations for different databases) and (b) there is no need to unit test the flow in isolation.  If (b) is not true then mocking the dependency would be tricky.  One of the advantages of the function-oriented architecture style is that mocks are normally not needed and, when used, should be trivial to implement.
 
 3. **Dependence on type aliases**
@@ -387,6 +387,45 @@ To mitigate that inconvenience without entirely giving-up the decoupling advanta
     * In most cases, the type alias should be defined in the file that implements the dependency stereotype instance.  This promotes higher cohesiveness.  There is no need to worry that the flow that depends on the type alias would end-up depending on the dependency stereotype implementation.  Even though the type alias and the implementation may be in the same file, the flow need not have any knowledge of the implementation.
     * For stereotype instances that require multiple implementations in different technologies (e.g., a DAF that needs to be implemented for two different databases), the type alias should not be placed in any of the technology-specific implementation files.
     * By searching in an IDE for the type alias minus its suffix, the implementation file can be easily found, thus providing navigability without coupling.  When the type alias is defined in the same file as the dependency stereotype instance, by looking-up the definition of the type alias one would land directly on the dependency stereotype instance file.
+
+4. **Direct calling of BF instances**
+   
+    Flows and BFs are allowed to directly call BF instances that do not require configuration properties.  Doing so defines direct dependencies between the calling and called modules.  The advantage of a direct call in this case is that it facilitates navigation of the code from caller to callee.  Since the called BFs are pure functions, the direct calls do not introduce platform dependencies.  So, such direct calls are OK, except from the perspective of being able to unit test the caller without depending on the callee.
+    
+    The provide the flexibility to unit test the caller without the dependency, one can implement the calling module with two stereotype instance constructors, one of which takes the called BF as an input parameter and the other which calls the first one passing the BF implementation as an argument.  For example, in Go:
+    
+    ```go
+    // ArticleGetAndCheckOwnerFlT is the type of the stereotype instance for the flow that
+    // checks if a given article's author's username matches a given username, with hard-wired BF dependencies.
+       type ArticleGetAndCheckOwnerFlT = func(username, slug string) (model.Article, RecCtxArticle, error)
+    
+    // ArticleGetAndCheckOwnerFlC is the function that constructs a stereotype instance of type
+    // ArticleGetAndCheckOwnerFlT with hard-wired BF dependencies.
+    func ArticleGetAndCheckOwnerFlC(
+        articleGetBySlugDaf ArticleGetBySlugDafT,
+    ) ArticleGetAndCheckOwnerFlT {
+        articleCheckOwnerBf := ArticleCheckOwnerBfI
+        return ArticleGetAndCheckOwnerFlC0(
+            articleGetBySlugDaf,
+            articleCheckOwnerBf,
+        )
+    }
+    
+    // ArticleGetAndCheckOwnerFlC0 is the function that constructs a stereotype instance of type
+    // ArticleGetAndCheckOwnerFlT without hard-wired BF dependencies.
+    func ArticleGetAndCheckOwnerFlC0(
+        articleGetBySlugDaf ArticleGetBySlugDafT,
+        articleCheckOwnerBf ArticleCheckOwnerBfT,
+    ) ArticleGetAndCheckOwnerFlT {
+        // ... core implementation
+    }
+    ```
+	Notice the naming conventions used in the example above:
+	
+	- `ArticleCheckOwnerBfT` is the type of the BF instance that the flow needs to call.
+	- `ArticleCheckOwnerBfI` is the function that implements the `ArticleCheckOwnerBfT` type.
+	- The module that defines `ArticleCheckOwnerBfT` also contains the implementation `ArticleCheckOwnerBfI`.
+
 
 
 
