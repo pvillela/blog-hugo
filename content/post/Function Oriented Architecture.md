@@ -392,12 +392,14 @@ To mitigate that inconvenience without entirely giving-up the decoupling advanta
    
     Flows and BFs are allowed to directly call BF instances that do not require configuration properties.  Doing so defines direct dependencies between the calling and called modules.  The advantage of a direct call in this case is that it facilitates navigation of the code from caller to callee.  Since the called BFs are pure functions, the direct calls do not introduce platform dependencies.  So, such direct calls are OK, except from the perspective of being able to unit test the caller without depending on the callee.
     
-    The provide the flexibility to unit test the caller without the dependency, one can implement the calling module with two stereotype instance constructors, one of which takes the called BF as an input parameter and the other which calls the first one passing the BF implementation as an argument.  For example, in Go:
+    The provide the flexibility to unit test the caller without the dependency, one can implement the calling module with two stereotype instance constructors, one of which takes the called BF as an input parameter and the other which calls the first one passing the BF implementation as an argument.
+    
+    For example, in Go:
     
     ```go
     // ArticleGetAndCheckOwnerFlT is the type of the stereotype instance for the flow that
     // checks if a given article's author's username matches a given username, with hard-wired BF dependencies.
-       type ArticleGetAndCheckOwnerFlT = func(username, slug string) (model.Article, RecCtxArticle, error)
+    type ArticleGetAndCheckOwnerFlT = func(username, slug string) (model.Article, RecCtxArticle, error)
     
     // ArticleGetAndCheckOwnerFlC is the function that constructs a stereotype instance of type
     // ArticleGetAndCheckOwnerFlT with hard-wired BF dependencies.
@@ -418,8 +420,8 @@ To mitigate that inconvenience without entirely giving-up the decoupling advanta
         articleCheckOwnerBf ArticleCheckOwnerBfT,
     ) ArticleGetAndCheckOwnerFlT {
         // ... core implementation
-    }
-    ```
+	}
+	```
 	Notice the naming conventions used in the example above:
 	
 	- `ArticleCheckOwnerBfT` is the type of the BF instance that the flow needs to call.
