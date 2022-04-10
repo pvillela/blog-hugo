@@ -422,6 +422,7 @@ To mitigate that inconvenience without entirely giving-up the decoupling advanta
         // ... core implementation
 	}
 	```
+	
 	Notice the naming conventions used in the example above:
 	
 	- `ArticleCheckOwnerBfT` is the type of the BF instance that the flow needs to call.
