@@ -1,7 +1,7 @@
 ---
 title: Function-Oriented Architecture (this is a work in progress)
 date: 2021-03-14
-lastmod: 2022-04-10
+lastmod: 2022-04-12
 ---
 Function-Oriented Architecture
 ==============================
@@ -355,7 +355,7 @@ The possible advantage of such a grouping is the increased cohesiveness and redu
 
 The function-oriented architecture style's use of general function interfaces (instead of more traditional object-oriented interfaces with multiple methods) can make it harder to navigate from a flow that uses a stereotype instance to the stereotype's implementation.
 
-To mitigate that inconvenience without entirely giving-up the decoupling advantages previously discussed, the following techniques can be used.  Each has its trade-offs:
+To mitigate that inconvenience without entirely giving-up the decoupling advantages previously discussed, the following techniques can be used.  Each has its trade-offs.
 1. **Naming of the variables representing stereotype dependencies**
 
     Simply name each variable representing a stereotype dependency with the name of the stereotype instance, possibly changing the case of the first character to conform with language requirements or conventions.
@@ -388,46 +388,87 @@ To mitigate that inconvenience without entirely giving-up the decoupling advanta
     * For stereotype instances that require multiple implementations in different technologies (e.g., a DAF that needs to be implemented for two different databases), the type alias should not be placed in any of the technology-specific implementation files.
     * By searching in an IDE for the type alias minus its suffix, the implementation file can be easily found, thus providing navigability without coupling.  When the type alias is defined in the same file as the dependency stereotype instance, by looking-up the definition of the type alias one would land directly on the dependency stereotype instance file.
 
-4. **Direct calling of BF instances**
-   
-    Flows and BFs are allowed to directly call BF instances that do not require configuration properties.  Doing so defines direct dependencies between the calling and called modules.  The advantage of a direct call in this case is that it facilitates navigation of the code from caller to callee.  Since the called BFs are pure functions, the direct calls do not introduce platform dependencies.  So, such direct calls are OK, except from the perspective of being able to unit test the caller without depending on the callee.
-    
-    The provide the flexibility to unit test the caller without the dependency, one can implement the calling module with two stereotype instance constructors, one of which takes the called BF as an input parameter and the other which calls the first one passing the BF implementation as an argument.
-    
-    For example, in Go:
-    
-    ```go
-    // ArticleGetAndCheckOwnerFlT is the type of the stereotype instance for the flow that
-    // checks if a given article's author's username matches a given username, with hard-wired BF dependencies.
-    type ArticleGetAndCheckOwnerFlT = func(username, slug string) (model.Article, RecCtxArticle, error)
-    
-    // ArticleGetAndCheckOwnerFlC is the function that constructs a stereotype instance of type
-    // ArticleGetAndCheckOwnerFlT with hard-wired BF dependencies.
-    func ArticleGetAndCheckOwnerFlC(
-        articleGetBySlugDaf ArticleGetBySlugDafT,
-    ) ArticleGetAndCheckOwnerFlT {
-        articleCheckOwnerBf := ArticleCheckOwnerBfI
-        return ArticleGetAndCheckOwnerFlC0(
-            articleGetBySlugDaf,
-            articleCheckOwnerBf,
-        )
-    }
-    
-    // ArticleGetAndCheckOwnerFlC0 is the function that constructs a stereotype instance of type
-    // ArticleGetAndCheckOwnerFlT without hard-wired BF dependencies.
-    func ArticleGetAndCheckOwnerFlC0(
-        articleGetBySlugDaf ArticleGetBySlugDafT,
-        articleCheckOwnerBf ArticleCheckOwnerBfT,
-    ) ArticleGetAndCheckOwnerFlT {
-        // ... core implementation
-	}
-	```
-	
-	Notice the naming conventions used in the example above:
-	
-	- `ArticleCheckOwnerBfT` is the type of the BF instance that the flow needs to call.
-	- `ArticleCheckOwnerBfI` is the function that implements the `ArticleCheckOwnerBfT` type.
-	- The module that defines `ArticleCheckOwnerBfT` also contains the implementation `ArticleCheckOwnerBfI`.
+#### Direct calling of BF instances
+
+Flows and BFs are allowed to directly call BF instances that do not require configuration properties.  Doing so defines direct dependencies between the calling and called modules.  The advantage of a direct call in this case is that it facilitates navigation of the code from caller to callee.  Since the called BFs are pure functions, the direct calls do not introduce platform dependencies.  So, such direct calls are OK, except from the perspective of being able to unit test the caller without depending on the callee.
+
+To provide the flexibility to unit test the caller without the dependency, one can implement the calling module with two stereotype instance constructors, one of which takes the called BF as an input parameter and the other which calls the first one passing the BF implementation as an argument.
+
+The sample Go code below illustrates:
+- The implementation of a BF that does not require configuration properties, using pattern 3 above.
+- A flow that calls the BF directly, including two constructors, one of which enables unit testing without the BF dependency.
+- An instantiation of the flow using the constructor that calls the BF directly, i.e., the BF dependency does not need to be provided to the constructor.
+- A unit test of the flow where the BF dependency is mocked.
+
+**BF**
+
+```go
+type ArticleCheckOwnerBfT = func(article model.Article, username string) error
+
+var ArticleCheckOwnerBfI ArticleCheckOwnerBfT = func(article model.Article, username string) error {
+	// ... implementation
+}
+```
+
+**Flow that calls the BF**
+
+```go
+// ArticleGetAndCheckOwnerFlT is the type of the stereotype instance for the flow that
+// checks if a given article's author's username matches a given username, with hard-wired BF dependencies.
+type ArticleGetAndCheckOwnerFlT = func(username, slug string) (model.Article, RecCtxArticle, error)
+
+// ArticleGetAndCheckOwnerFlC is the function that constructs a stereotype instance of type
+// ArticleGetAndCheckOwnerFlT with hard-wired BF dependencies.
+func ArticleGetAndCheckOwnerFlC(
+    articleGetBySlugDaf ArticleGetBySlugDafT,
+) ArticleGetAndCheckOwnerFlT {
+    articleCheckOwnerBf := ArticleCheckOwnerBfI
+    return ArticleGetAndCheckOwnerFlC0(
+        articleGetBySlugDaf,
+        articleCheckOwnerBf,
+    )
+}
+
+// ArticleGetAndCheckOwnerFlC0 is the function that constructs a stereotype instance of type
+// ArticleGetAndCheckOwnerFlT without hard-wired BF dependencies.
+func ArticleGetAndCheckOwnerFlC0(
+    articleGetBySlugDaf ArticleGetBySlugDafT,
+    articleCheckOwnerBf ArticleCheckOwnerBfT,
+) ArticleGetAndCheckOwnerFlT {
+    // ... core implementation
+}
+```
+
+**Flow instantiation without need to pass BF as parameter**
+
+```go
+var articleGetBySlugDaf = daf.ArticleGetBySlugDafC(/* config params */)
+var articleGetAndCheckOwnerFl = fs.ArticleGetAndCheckOwnerFlC(articleGetBySlugDaf)
+```
+
+**Unit test of flow with mocked BF**
+
+```go
+var mockArticleCheckOwnerBf ArticleCheckOwnerBfT = func(article model.Article, username string) error {
+	// ... mock implementation
+}
+
+var mockArticleGetBySlugDaf = /* mock implementation of DAF */
+
+var articleGetAndCheckOwnerFl = ArticleGetAndCheckOwnerFlC0(
+    mockArticleGetBySlugDaf,
+    mockArticleCheckOwnerBf,
+)
+
+// Invoke articleGetAndCheckOwnerFl with test inputs and assert expected results.
+// ...
+```
+
+Notice the naming conventions used in the above sample code:
+
+- `ArticleCheckOwnerBfT` is the type of the BF instance that the flow needs to call.
+- `ArticleCheckOwnerBfI` is the function that implements the `ArticleCheckOwnerBfT` type.
+- The module that defines `ArticleCheckOwnerBfT` also contains the implementation `ArticleCheckOwnerBfI`.
 
 
 
