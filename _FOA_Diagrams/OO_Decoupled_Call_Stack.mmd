@@ -1,0 +1,24 @@
+sequenceDiagram
+    participant Controller
+    participant XyzBusSvc
+    participant AbcDao
+
+    Controller->>+XyzBusSvc: Service call
+    activate XyzBusSvc
+    XyzBusSvc->>XyzBusSvc: validateInput
+    deactivate XyzBusSvc
+    XyzBusSvc->>AbcDao: readAbc
+    activate AbcDao
+    AbcDao-->>XyzBusSvc: .
+    deactivate AbcDao
+    activate XyzBusSvc
+    XyzBusSvc->>XyzBusSvc: processAbc
+    deactivate XyzBusSvc
+    XyzBusSvc->>AbcDao: writeAbc
+    activate AbcDao
+    AbcDao-->>XyzBusSvc: .
+    deactivate AbcDao
+    activate XyzBusSvc
+    XyzBusSvc->>XyzBusSvc: prepareResponse
+    deactivate XyzBusSvc
+    XyzBusSvc-->>-Controller: Service response

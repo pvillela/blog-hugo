@@ -1,0 +1,49 @@
+@startuml
+
+skinparam SequenceBoxBackgroundColor White
+skinparam SequenceBoxBorderColor LightGrey
+skinparam SequenceBoxFontSize 17
+skinparam SequenceBoxFontStyle Bold
+
+skinparam sequence {
+ArrowColor Black
+LifeLineBorderColor Black
+' LifeLineBackgroundColor LightGrey
+
+ParticipantBorderColor Black
+' ParticipantBackgroundColor DodgerBlue
+' ParticipantFontName Impact
+' ParticipantFontSize 17
+' ParticipantFontColor #A9DCDF
+
+' ActorBorderColor DeepSkyBlue
+' ActorBackgroundColor aqua
+' ActorFontColor DeepSkyBlue
+' ActorFontSize 17
+' ActorFontName Aapex
+}
+
+box Function-Oriented Call Stack \n
+
+participant Adapter
+participant XyzSfl
+participant ValidateInputBf
+participant ReadAbcDaf
+participant ProcessAbcBf
+participant WriteAbcDaf
+participant PrepareResponseBf
+
+Adapter->XyzSfl ++ : invoke
+XyzSfl->ValidateInputBf ++: invoke
+return .
+XyzSfl->ReadAbcDaf ++ : invoke
+return .
+XyzSfl->ProcessAbcBf ++ : invoke
+return .
+XyzSfl->WriteAbcDaf ++ : invoke
+return .
+XyzSfl->PrepareResponseBf ++ : invoke
+return .
+return .
+
+@enduml

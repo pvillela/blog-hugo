@@ -1,0 +1,50 @@
+@startuml
+
+skinparam SequenceBoxBackgroundColor White
+skinparam SequenceBoxBorderColor LightGrey
+skinparam SequenceBoxFontSize 17
+skinparam SequenceBoxFontStyle Bold
+
+skinparam NoteBorderColor Black
+skinparam NoteBackgroundColor White
+
+skinparam sequence {
+    ArrowColor Black
+    LifeLineBorderColor Black
+    ' LifeLineBackgroundColor LightGrey
+
+    ParticipantBorderColor Black
+    ' ParticipantBackgroundColor DodgerBlue
+    ' ParticipantFontName Impact
+    ' ParticipantFontSize 17
+    ' ParticipantFontColor #A9DCDF
+
+    ' ActorBorderColor DeepSkyBlue
+    ' ActorBackgroundColor aqua
+    ' ActorFontColor DeepSkyBlue
+    ' ActorFontSize 17
+    ' ActorFontName Aapex
+}
+
+box Object-Oriented Call Stack: Coupled \n
+
+participant Controller
+participant XyzBusSvc
+participant AbcDao
+
+Controller->XyzBusSvc ++ : doIt
+||10|
+note over XyzBusSvc: Validate input
+||10|
+XyzBusSvc->AbcDao ++ : readAbc
+return .
+||10|
+note over XyzBusSvc: Process Abc
+||10|
+XyzBusSvc->AbcDao +++ : writeAbc
+return .
+||10|
+note over XyzBusSvc: Prepare response
+return .
+
+@enduml

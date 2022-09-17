@@ -1,0 +1,21 @@
+sequenceDiagram
+    participant Adapter
+    participant XyzSfl
+    participant ValidateInputBf
+    participant ReadAbcDaf
+    participant ProcessAbcBf
+    participant WriteAbcDaf
+    participant PrepareResponseBf
+
+    Adapter->>XyzSfl: Service call
+    XyzSfl->>ValidateInputBf: invoke
+    ValidateInputBf-->>XyzSfl: .
+    XyzSfl->>ReadAbcDaf: invoke
+    ReadAbcDaf-->>XyzSfl: .
+    XyzSfl->>ProcessAbcBf: invoke
+    ProcessAbcBf-->>XyzSfl: .
+    XyzSfl->>WriteAbcDaf: invoke
+    WriteAbcDaf-->>XyzSfl: .
+    XyzSfl->>PrepareResponseBf: invoke
+    PrepareResponseBf-->>XyzSfl: .
+    XyzSfl->>Adapter: Service response

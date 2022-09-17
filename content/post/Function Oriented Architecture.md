@@ -1,7 +1,7 @@
 ---
 title: Function-Oriented Architecture (this is a work in progress)
 date: 2021-03-14
-lastmod: 2022-04-12
+lastmod: 2022-09-17
 ---
 Function-Oriented Architecture
 ==============================
@@ -537,6 +537,8 @@ An important aspect of the function-oriented architecture is that the stereotype
   ### Type-safe dependency injection
 
   ### Type-safe configuration
+
+My [Module Configuration](https://pvillela.com/2022/module-configuration/) article addresses this topic.
 
   ### Other
 
