@@ -1,12 +1,12 @@
 ---
 title: Function-Oriented Architecture (this is a work in progress)
 date: 2021-03-14
-lastmod: 2022-09-17
+lastmod: 2023-02-27
 ---
 Function-Oriented Architecture
 ==============================
 
-This report collects my thoughts on function-oriented architecture, a concept that has been shaped primarily by two very large and successful systems I architected over the past six years.  This report is a work-in-progress that evolves as I write down my ideas and experiences on this topic, and as I continue to get feedback from other software architects and developers, especially those who worked with me on the aforementioned projects.
+This report collects my thoughts on function-oriented architecture, a concept that has been shaped primarily by two very large and successful systems I architected over the past several years.  This report is a work-in-progress that evolves as I write down my ideas and experiences on this topic, and as I continue to get feedback from other software architects and developers, especially those who worked with me on the aforementioned projects.
 
 
 
@@ -230,11 +230,13 @@ The function-oriented architecture module meta-model defines the following stere
 * A ***Supporting Function*** module is responsible for containing business logic functions that are reusable across multiple *Business Function* modules; it should not do anything else.  The functions in this kind of module must be pure, i.e., without any side-effects.  In particular, this kind of module may not perform any I/O.  A *Supporting Function* module may only depend on *Business Domain Data* modules.  By convention, the names of modules implementing this stereotype and the names of functions exported by this kind of module have the suffix "***Sup***".
 * A ***Platform-Specific Data*** module implements a data structure that contains platform-specific data and, possibly, convenience methods and validation methods.  Such a data structure is used for data transfer to/from platform services, e.g., a database, a queue, an event hub, or a remote service.  This kind of module may depend on *Business Data* modules and other *Platform-Specific Data* modules, but it may not depend on any other stereotypes.
 
-A key guiding principle in this model is that each of the subkinds of the *Function* stereotype does only one kind of thing.  
+The **first key guiding principle** in this model is that each of the subkinds of the *Function* stereotype does only one kind of thing.  
 
-Another key principle is that only *Flow* (including *Service Flow*) modules are allowed to call other subkinds of the *Function* stereotype.  With one exception, those calls are always through a general function interface, so there is no dependence between the flow and the modules that implement the called functions.  The exception is that a *Flow* instance is allowed to call a *Business Function* instance directly, if the BF does not require any configuration properties, instead of using a general function interface.  This exception is allowed for the sake of simplicity.  While this creates a direct dependency, that is typically not a problem as will be discussed later in this report.
+The **second key guiding principle** is that the dependencies among subkinds of the *Function* stereotype are restricted as follows:
 
-In particular, instances of *Business Function*, *Data Access Function*, *Service Client*, and *Event Publisher* are not allowed to call instances of the same or other stereotypes, with one exception.  Instances of *Business Function* are allowed to call other instances of *Business Function* directly (if the other BFs do not require any configuration properties) or through a general function interface.
+- Instances of *Flow* (including *Service Flow*) are allowed to call other subkinds of the *Function* stereotype.  With one exception, those calls are always through a general function interface, so there is no dependence between the flow and the modules that implement the called functions. The exception is that a *Flow* instance is allowed to call a *Business Function* instance directly. While this creates a direct dependency, that is typically not a problem as will be discussed later in this report.
+- Instances of *Data Access Function*, *Service Client*, and *Event Publisher* are not allowed to call instances of the same or other stereotypes directly or through a general function interface. 
+- Instances of *Business Function* are allowed to call other instances of *Business Function* but not instances of other stereotypes directly or through a general function interface.
 
 Adherence to these principles enables module decoupling, an important feature of this function-oriented architecture. 
 
